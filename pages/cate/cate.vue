@@ -1,5 +1,9 @@
 <template>
 	<view>
+		<!-- 使用自定义搜索组件 -->
+		<!-- <my-search :bgcolor="'#000000'"></my-search> -->
+		<my-search @click="gotoSearch"></my-search>
+		<!-- 滑动区 -->
 		<view class="scroll-view-container">
 			<!-- 左侧滑动区域 -->
 			<!-- 这里的高度也可以使用100vh -->
@@ -43,7 +47,9 @@
 			}
 		},
 		onLoad() {
+			//  获取设备信息
 			const sysInfo = uni.getSystemInfoSync();
+			// 当前屏幕可用高度
 			this.wh = sysInfo.windowHeight;
 			this.getCateList();
 		},
@@ -67,6 +73,11 @@
 			gotoGoodList(item3){
 				uni.navigateTo({
 					url:`/subpkg/goods_list/goods_list?cid=${item3.cat_id}`
+				})
+			},
+			gotoSearch(){
+				uni.navigateTo({
+					url:'/subpkg/search/search'
 				})
 			}
 		}

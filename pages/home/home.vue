@@ -1,5 +1,9 @@
 <template>
 	<view>
+		<!-- 这是搜索组件 -->
+		<view class="search-box">
+			<my-search @click="gotoSearch"></my-search>
+		</view>
 		<!-- 轮播图 -->
 		<!-- 属性从左到右分别是 是否显示小圆点，是否自动切换，轮播间隔，轮播时间，是否循环 -->
 		<swiper class="swiper-aa" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
@@ -112,6 +116,12 @@
 					})
 				})
 				this.floorList = res.message;
+			},
+			gotoSearch(){
+				// 这个页面跳转不建议写在组件里面，那样太死了，因为不同的界面可能会有不同的跳转路径
+				uni.navigateTo({
+					url:'/subpkg/search/search'
+				})
 			}
 		},
 	}
@@ -176,5 +186,15 @@
 		display: flex;
 		/* padding: 0 0 0 10px; */
 		padding-left: 10px;
+	}
+	.search-box{
+		/* 效果：固定 */
+		position: sticky;
+		/* 替代代码
+		position: fixed;
+		width:100%;
+		 */
+		top: 0;
+		z-index: 999;
 	}
 </style>
