@@ -2,7 +2,8 @@
 	<view>
 		<!-- 这是搜索组件 -->
 		<view class="search-box">
-			<my-search @click="gotoSearch"></my-search>
+			<!-- 触发自定义事件 -->
+			<my-search @myclick="gotoSearch"></my-search>
 		</view>
 		<!-- 轮播图 -->
 		<!-- 属性从左到右分别是 是否显示小圆点，是否自动切换，轮播间隔，轮播时间，是否循环 -->

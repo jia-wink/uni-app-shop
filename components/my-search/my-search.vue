@@ -33,8 +33,8 @@
 		methods: {
 			searchBoxHandler(){
 				console.log('111');
-				// 触发外界传递的事件
-				this.$emit('click');
+				// 触发外界传递的事件（myclick是自定义事件名）
+				this.$emit('myclick');
 			},
 		}
 	}

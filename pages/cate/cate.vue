@@ -2,7 +2,7 @@
 	<view>
 		<!-- 使用自定义搜索组件 -->
 		<!-- <my-search :bgcolor="'#000000'"></my-search> -->
-		<my-search @click="gotoSearch"></my-search>
+		<my-search @myclick="gotoSearch"></my-search>
 		<!-- 滑动区 -->
 		<view class="scroll-view-container">
 			<!-- 左侧滑动区域 -->
