@@ -7,7 +7,7 @@
 		</view>
 		<!-- 轮播图 -->
 		<!-- 属性从左到右分别是 是否显示小圆点，是否自动切换，轮播间隔，轮播时间，是否循环 -->
-		<swiper class="swiper-aa" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
+		<swiper class="swiper-aa" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" circular="true">
 			<swiper-item v-for="(item,index) in swiperList" :key="index">
 				<!-- 用模板字符串更好理解 -->
 				<navigator class="swiper-item" :url="`/subpkg/goods_detail/goods_detail?goods_id = ${item.goods_id}`">
