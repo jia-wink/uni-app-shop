@@ -41,7 +41,7 @@
 		},
 		onLoad() {
 			// 在页面加载的时候，获取之前的历史搜索数据
-			
+			// console.log('mua');
 			this.historyList = JSON.parse(uni.getStorageSync('kw') || '[]')
 		},
 		methods:{

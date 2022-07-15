@@ -53,7 +53,11 @@
 </template>
 
 <script>
+	import badgeMix from '@/mixins/tabbar-badge.js'
+	
 	export default {
+		// mixins是Vue的语法,可以将重复的js片段进行封装
+		mixins:[badgeMix],
 		data() {
 			return {
 				// 轮播图的列表
@@ -119,6 +123,7 @@
 				this.floorList = res.message;
 			},
 			gotoSearch(){
+				// console.log('222');
 				// 这个页面跳转不建议写在组件里面，那样太死了，因为不同的界面可能会有不同的跳转路径
 				uni.navigateTo({
 					url:'/subpkg/search/search'

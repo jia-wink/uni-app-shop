@@ -41,7 +41,41 @@
 </template>
 
 <script>
+	// 从vuex中按需导出mapState辅助方法
+	import { mapState,mapMutations,mapGetters } from 'vuex'
+	
 	export default {
+		computed:{
+			// 调用 mapState 方法，把 m_cart 模块中的 cart 数组映射到当前页面中，作为计算属性来使用
+			// ...mapState('模块的名称', ['要映射的数据名称1', '要映射的数据名称2'])
+			...mapState('m_cart', []),
+			// 把 m_cart 模块中名称为 total 的 getter 映射到当前页面中使用
+			...mapGetters('m_cart',['total']),
+		},
+		// 定义一个监听器
+		watch:{
+			// 监听total值的变化，通过第一个形参得到变化后的新值
+			// total(newVal){
+			// 	const findResult = this.options.find( x => x.text === '购物车')
+			// 	if (findResult) {
+			// 		findResult.info = newVal
+			// 	}
+			// }
+			
+			// 为了使得在页面首次加载时能立即调用,使用对象的形式来定义watch侦听器
+			// Vue的深度监听
+			total:{
+				// handler属性用来定义侦听器的function处理函数
+				handler(newVal){
+						const findResult = this.options.find( x => x.text === '购物车')
+						if (findResult) {
+							findResult.info = newVal
+					}
+				},
+				// immediate 属性用来声明此侦听器,是否在页面初次加载完毕的时候立即调用
+				immediate: true
+			}
+		},
 		data() {
 			return {
 				goods_info:{},
@@ -62,7 +96,7 @@
 						}, {
 							icon: 'cart',
 							text: '购物车',
-							info: 2
+							info: 0
 						}],
 					    buttonGroup: [{
 					      text: '加入购物车',
@@ -82,8 +116,21 @@
 			const goods_id = options.goods_id
 			// 调用请求商品数据的方法
 			this.getGoodsDetail(goods_id)
+			// 在页面加载的时候更新一下购物车的角标，防止出现第一次加载购物车不显示数量的问题
+			// 写法一 常规
+			// this.options[2].info = this.total
+			
+			// 写法二，通用性更好
+			// const findResult = this.options.find( x => x.text === '购物车')
+			// if (findResult) {
+			// 	findResult.info = this.total
+			//	}
+			// 方法三
+			// 直接在watch里一对象的形式来定义watch侦听器(Vue)
 		},
 		methods: {
+			// 用扩展运算符导入mapMutation里的方法
+			...mapMutations('m_cart',['addToCart','saveToStorage']),
 			async getGoodsDetail(goods_id){
 				const {data : res} = await uni.$http.get('http://api-ugo-web.itheima.net/api/public/v1/goods/detail',{goods_id:goods_id})
 				if(res.meta.status !== 200) return uni.showMsg()
@@ -109,7 +156,23 @@
 						url:'/pages/cart/cart'
 					})
 				}
-			}
+			},
+			buttonClick(e){ 
+				if (e.content.text === '加入购物车') {
+					// 组织商品的信息对象
+					// { goods_id, goods_name, goods_price, goods_count, goods_small_logo, goods_state }
+					const goods = {
+						goods_id: this.goods_info.goods_id,
+						goods_name: this.goods_info.goods_name,
+						goods_price: this.goods_info.goods_price,
+						goods_count: 1,
+						goods_small_logo: this.goods_info.goods_small_logo,
+						goods_state: true
+					}
+					// 调用 addToCart 方法
+					this.addToCart(goods)
+				}
+			},
 		}
 	}
 </script>
