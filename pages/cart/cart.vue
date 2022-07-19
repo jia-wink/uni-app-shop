@@ -15,10 +15,10 @@
 		<!-- 滑动删除基本结构，快捷方式“uswipeaction” -->
 		<uni-swipe-action>
 			<!-- 循环显示商品列表 -->
-			<view class="" v-for="(item,index) in cart" :key="index" @click="gotoDetail(item)">
+			<view class="" v-for="(item,index) in cart" :key="index" >
 				<uni-swipe-action-item :right-options="options" @click="swiperItemClickHanler(item)">
 					<!-- 这里用到了之前定义的自定义组件 -->
-					<my-goods :goods="item" :showRadio="true" :showNum="true" @radio-change="radioChangeHandler()" @num-cange="numberChangeHandler()"></my-goods>
+					<my-goods :goods="item" :showRadio="true" :showNum="true" @radio-change="radioChangeHandler()" @num-cange="numberChangeHandler()" ></my-goods>
 				</uni-swipe-action-item>
 			</view>
 		</uni-swipe-action>

@@ -14,6 +14,15 @@ $http.beforeRequest = function(options){
 	uni.showLoading({
 		title:'数据加载中...'
 	})
+	
+	// 判断当前请求的接口是否为有权限的接口,实际上就是判断有没有/my/这个后缀
+	if(options.url.indexOf('/my/') !== -1){
+		// 为请求头添加身份认证字段(token)
+		options.header = {
+			// 字段的值可以直接从vuex中获取
+			Authorization: store.state.m_user.token,
+		}
+	}
 }
 
 // 隐藏拦截器
